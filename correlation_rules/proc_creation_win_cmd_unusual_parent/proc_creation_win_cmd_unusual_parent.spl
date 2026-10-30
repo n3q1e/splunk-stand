@@ -1,1 +1,7 @@
-
+index="main" source="WinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=1
+Image="*\\cmd.exe" 
+ParentImage IN ("*\\csrss.exe", "*\\ctfmon.exe", "*\\dllhost.exe", "*\\notepad.exe", "*\\FlashPlayerUpdateService.exe", 
+"*\\GoogleUpdate.exe", "*\\jucheck.exe", "*\\jusched.exe", "*\\LogonUI.exe", "*\\lsass.exe", "*\\regsvr32.exe",
+"*\\SearchIndexer.exe", "*\\SearchProtocolHost.exe", "*\\SIHClient.exe", "*\\sihost.exe", "*\\slui.exe", "*\\spoolsv.exe",
+"*\\sppsvc.exe", "*\\taskhostw.exe", "*\\unsecapp.exe", "*\\WerFault.exe", "*\\wermgr.exe", "*\\wlanext.exe", "*\\WUDFHost.exe")
+| table _time, Computer, User, ParentImage, Image, CommandLine
