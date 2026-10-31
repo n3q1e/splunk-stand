@@ -1,0 +1,20 @@
+title: Неуспешная попытка входа
+id: 9a234f21-789a-4cde-bc74-123456789abc
+status: stable
+description: Единичные события неуспешного входа в систему
+author: n3q
+date: 2026/10/31
+tags:
+    - attack.credential_access
+    - attack.t1110.001
+logsource:
+    product: windows
+    service: security
+detection:
+    selection:
+        EventID: 4625
+        LogonType: 
+            - 3 # cdrive/smb
+            - 10 # rdp
+    condition: selection
+level: low
