@@ -1,0 +1,26 @@
+title: Очистка журналов событий Windows через Wevtutil
+id: 5693c0bc-f823-4530-bc2d-5b369ec2646d
+status: stable
+description: Обнаруживает запуск утилиты wevtutil.exe с параметрами командной строки, направленными на очистку логов (аргументы cl или clear-log).
+references:
+    - https://mitre.org
+author: AI
+date: 2026/10/31
+tags:
+    - attack.defense_evasion
+    - attack.t1070.001
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection_img:
+        - Image|endswith: '\wevtutil.exe'
+        - OriginalFileName: 'wevtutil.exe'
+    selection_cli:
+        CommandLine|contains:
+            - ' cl '
+            - 'clear-log'
+    condition: selection_img and selection_cli
+falsepositives:
+    - Скрипты автоматизации администраторов, которые очищают логи перед созданием эталонных образов систем (Gold Image).
+level: high
