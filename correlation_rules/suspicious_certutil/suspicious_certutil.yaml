@@ -1,1 +1,25 @@
+title: Подозрительное использование утилиты Certutil
+id: d4b341f2-1278-4db8-831e-b816a75f284c
+status: stable
+description: Обнаруживает запуск утилиты certutil.exe с параметрами urlcache (часто применяется для скачивания файлов из сети) или ping (используется для проверки связи или скрытных сетевых запросов).
+author: AI & n3q
+date: 2026/10/31
+tags:
+    - attack.command_and_control
+    - attack.t1105
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection_img:
+        - Image|endswith: '\certutil.exe'
+        - OriginalFileName: 'CertUtil.exe'
+    selection_cli:
+        CommandLine|contains:
+            - 'urlcache'
+            - 'ping'
+    condition: selection_img and selection_cli
+falsepositives:
+    - Легитимные скрипты администраторов, проверяющие или обновляющие списки отзыва сертификатов (CRL).
+level: high
 
