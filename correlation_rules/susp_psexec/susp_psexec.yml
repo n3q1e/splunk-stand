@@ -1,0 +1,27 @@
+title: Suspicious PsExec
+id: 97cd096c-ddf2-491b-85fb-561b369c7625
+status: test
+description: Детектирует создание именованных каналов, характерных для утилит PsExec/PAExec, с измененным (переименованным) названием службы для обхода базового мониторинга.
+references:
+    - https://mitre.org
+author: n3q & AI
+date: 2026/10/10
+tags:
+    - attack.lateral-movement
+    - attack.t1021.002
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection:
+        EventID: 17
+        PipeName|endswith:
+            - '-stdin'
+            - '-stdout'
+            - '-stderr'
+    filter:
+        PipeName|contains: 'psexec'
+    condition: selection and not filter
+falsepositives:
+    - Легитимное использование кастомных инструментов администрирования, мимикрирующих под логику PsExec.
+level: high
